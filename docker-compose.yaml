@@ -1,0 +1,12 @@
+services:
+  c-app:
+    image: gcc:latest # C++ 컴파일러가 포함된 공식 이미지 (gcc)
+    container_name: c-test-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/usr/src/app # 로컬의 app 폴더를 컨테이너 내부로 마운트
+    working_dir: /usr/src/app
+    command: ["/bin/bash"]
+    tty: true # 인터랙티브한 셸을 위해 tty를 활성화
