@@ -1,6 +1,7 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
+
 typedef struct Node {
   char data[20];
   struct Node *next;
@@ -68,6 +69,65 @@ int insertAtPosition(char *data, int i) {
   return 1;
 }
 
+int deleteAtHead(void) {
+  if (g_head_pointer == NULL) {
+    printf("empty node\n");
+    return 0;
+  }
+  Node *temp = g_head_pointer;
+  g_head_pointer = g_head_pointer->next;
+
+  printf("delete %s data \n", temp->data);
+  free(temp);
+
+  return 1;
+}
+
+int deleteAtTail(void) {
+  if (g_head_pointer == NULL) {
+    printf("EMPTY NODE \n");
+    return 0;
+  }
+  Node *now = g_head_pointer;
+  Node *prev = NULL;
+  while (now->next != NULL) {
+    prev = now;
+    now = now->next;
+  }
+  prev->next = NULL;
+  printf("delete at tail function executed");
+  printf("delete %s data \n", now->data);
+  free(now);
+  return 1;
+}
+
+int deleteAtPosition(int i) {
+  if (i == 0) {
+    printf("delete at position {%d} function executed\n", i);
+    deleteAtHead();
+    return 1;
+  }
+
+  Node *now = g_head_pointer;
+  Node *prev = NULL;
+  int count = 0;
+  while (count != i && now != NULL) {
+    count++;
+    prev = now;
+    now = now->next;
+  }
+  if (now == NULL) {
+    printf("ERROR: delete at position {%d} function can't be excuted.\n", i);
+    return 0;
+  }
+  prev->next = now->next;
+  printf("delete at position {%d} function executed\n", i);
+  printf("delete %s data \n", now->data);
+
+  free(now);
+  return 1;
+}
+
 void printNodeData(void) {
   struct Node *now = g_head_pointer;
   while (now != NULL) {
@@ -86,10 +146,14 @@ int main() {
   insertAtHead("second");
   printNodeData();
 
-  insertAtPosition("inserted at 1", 4);
+  deleteAtPosition(4);
   printNodeData();
 
-  insertAtPosition("newly inserted at 1", 1);
+  deleteAtPosition(1);
   printNodeData();
+
+  deleteAtPosition(0);
+  printNodeData();
+
   return 0;
 }
