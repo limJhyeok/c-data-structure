@@ -68,7 +68,7 @@ int insertAtPosition(char *data, int i) {
   return 1;
 }
 
-void PrintNodeData(void) {
+void printNodeData(void) {
   struct Node *now = g_head_pointer;
   while (now != NULL) {
     printf("now address: %p, data: %s, next pointer: %p \n", now, now->data,
@@ -80,16 +80,16 @@ void PrintNodeData(void) {
 
 int main() {
   insertAtTail("tail");
-  PrintNodeData();
+  printNodeData();
   insertAtHead("first");
-  PrintNodeData();
+  printNodeData();
   insertAtHead("second");
-  PrintNodeData();
+  printNodeData();
 
   insertAtPosition("inserted at 1", 4);
-  PrintNodeData();
+  printNodeData();
 
   insertAtPosition("newly inserted at 1", 1);
-  PrintNodeData();
+  printNodeData();
   return 0;
 }
