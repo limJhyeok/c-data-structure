@@ -128,8 +128,94 @@ int deleteAtPosition(int i) {
   return 1;
 }
 
+int freeList(void) {
+  if (g_head_pointer == NULL) {
+    printf("Empty List");
+    return 1;
+  }
+  Node *now = g_head_pointer;
+  Node *prev = NULL;
+  while (now) {
+    prev = now;
+    now = now->next;
+    free(prev);
+  }
+  g_head_pointer = NULL;
+  return 1;
+}
+
+int updateAtHead(char *data) {
+  if (g_head_pointer == NULL) {
+    printf("There is no data to update.");
+    return 0;
+  }
+  strcpy(g_head_pointer->data, data);
+  return 0;
+}
+
+int updateAtTail(char *data) {
+  if (g_head_pointer == NULL) {
+    printf("There is no data to update.");
+    return 0;
+  }
+  Node *now = g_head_pointer;
+  Node *prev = NULL;
+  while (now) {
+    prev = now;
+    now = now->next;
+  }
+  strcpy(prev->data, data);
+  return 1;
+}
+
+int updateAtPosition(int i, char *data) {
+  if (g_head_pointer == NULL) {
+    printf("There is no data to update.\n");
+    return 0;
+  }
+  if (i == 0) {
+    updateAtHead(data);
+    return 1;
+  }
+  Node *now = g_head_pointer;
+  int count = 0;
+  while (count != i) {
+    count++;
+    now = now->next;
+    if (now == NULL) {
+      printf("update at {%d} can't be accomplished\n", i);
+      return 0;
+    }
+  }
+  if (now == NULL) {
+    printf("update at {%d} can't be accomplished\n", i);
+    return 0;
+  }
+  strcpy(now->data, data);
+  return 1;
+}
+
+Node *search(char *data) {
+  if (g_head_pointer == NULL) {
+    printf("There is no data to search.\n");
+    return NULL;
+  }
+  Node *now = g_head_pointer;
+  while (now) {
+    if (strcmp(now->data, data) == 0) {
+      return now;
+    }
+    now = now->next;
+  }
+  printf("'%s' isn't in the list.", data);
+  return NULL;
+}
+
 void printNodeData(void) {
   struct Node *now = g_head_pointer;
+  if (now == NULL) {
+    printf("Empty List\n");
+  }
   while (now != NULL) {
     printf("now address: %p, data: %s, next pointer: %p \n", now, now->data,
            now->next);
@@ -141,19 +227,30 @@ void printNodeData(void) {
 int main() {
   insertAtTail("tail");
   printNodeData();
+
+  updateAtHead("Head Update");
+  printNodeData();
+
+  updateAtTail("Tail updated");
+  printNodeData();
+
+  updateAtPosition(0, "index 0 updated");
+  printNodeData();
+
   insertAtHead("first");
+  updateAtPosition(2, "index 2 updated");
+
   printNodeData();
   insertAtHead("second");
   printNodeData();
-
-  deleteAtPosition(4);
+  updateAtPosition(2, "index 2 update");
   printNodeData();
 
-  deleteAtPosition(1);
-  printNodeData();
+  Node *searched = search("index 1 update");
+  printf("'%s' is founded\n", searched->data);
 
-  deleteAtPosition(0);
-  printNodeData();
+  freeList();
 
+  printNodeData();
   return 0;
 }
