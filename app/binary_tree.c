@@ -61,7 +61,7 @@ void inorderTraverse(Node* node) {
     if (node->left != NULL) {
       inorderTraverse(node->left);
     }
-    printf("%d ", node->data);
+    printf("%p adress data: %d \n", node, node->data);
     if (node->right != NULL) {
       inorderTraverse(node->right);
     }
@@ -271,7 +271,13 @@ int deleteNode(int data) {
   return 0;
 }
 
-void freeTree(Node* root);
+void freeTree(Node* root) {
+  if (root == NULL) return;
+  if (root->left != NULL) freeTree(root->left);
+  if (root->right != NULL) freeTree(root->right);
+  printf("%p(->%d) address is deleted\n", root, root->data);
+  free(root);
+};
 
 int main() {
   insertNode(10);
@@ -284,12 +290,8 @@ int main() {
   insertNode(15);
   insertNode(17);
   insertNode(16);
-  deleteNode(10);
-  inorderTraverse(g_p_root);
-  deleteNode(4);
-  deleteNode(2);
-  deleteNode(15);
 
   inorderTraverse(g_p_root);
+  freeTree(g_p_root);
   return 0;
 }
