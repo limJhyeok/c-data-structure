@@ -267,23 +267,6 @@ int deleteNode(int data) {
     }
     free(replace);
     return 1;
-    // if (parent->left == find_node){
-    //   parent->left = replace;
-    //   replace->right = find_node->right;
-    //   replace->left = find_node->left;
-    //   replace_parent->left = NULL;
-    //   free(replace);
-    //   return 1;
-    // }
-
-    // if(parent->right == find_node){
-    //   parent->right = replace;
-    //   replace->right = find_node->right;
-    //   replace->left = find_node->left;
-    //   replace_parent->left = NULL;
-    //   free(find_node);
-    //   return 1;
-    // }
   }
   return 0;
 }
