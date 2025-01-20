@@ -61,7 +61,7 @@ pip install pre-commit
 ```bash
 pre-commit install
 ```
-### 컨테이너 종료
+### container 종료
 ```bash
 docker-compose down
 ```
